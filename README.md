@@ -4,7 +4,7 @@ An out-of-box human parsing representation extracter. And 3rd LIP challenge winn
 
 ![lip-visualization](./img/lip-visualization.jpg)
 
-At this time, we provided the pretrained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extracter and faciliate your own tasks.
+At this time, we provid the pretrained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extracter and faciliate your own tasks.
 
 ## ToDO List
 
@@ -24,7 +24,7 @@ Python >= 3.5, PyTorch >= 0.4
 
 The easist way to get started is to use our pretrained SCHP models on your own images to extract human parsing representation. Here we provided pretrained models on three popular datasets. Theses three datasets have different label system, you can choose the best one fit on your own task.
 
-**LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1ZrTiadzAOM332d896fw7JZQ2lWALedDB/view?usp=sharing)
+**LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1ZrTiadzAOM332d896fw7JZQ2lWALedDB/view?usp=sharing))
 
 * mIoU on LIP validation: **59.36 %**.
 
@@ -38,7 +38,7 @@ The easist way to get started is to use our pretrained SCHP models on your own i
 
 **Pascal-Person-Part** ([exp-schp-201908270938-pascal-person-part.pth](https://drive.google.com/file/d/13ph1AloYNiC4DIGOyCLZdmA08tP9OeGu/view?usp=sharing))
 
-* mIoU on LIP validation: **71.46** %.
+* mIoU on Pascal-Person-Part validation: **71.46** %.
 
 * Pascal Person Part is a tiny single person human parsing dataset with 3000+ images. This dataset focus more on body parts segmentation. Pascal Person Part has 7 labels, including 'Background', 'Head', 'Torso', 'Upper Arms', 'Lower Arms', 'Upper Legs', 'Lower Legs'.
 
@@ -46,7 +46,7 @@ Choose one and have fun on your own task!
 
 ## Inference
 
-To extract the human parsing representation, simply put your own image in the `input directory`, `download a pretrained model and run the following command. The output images with the same file name will be saved in `output directory`
+To extract the human parsing representation, simply put your own image in the `input directory`, download a pretrained model and run the following command. The output images with the same file name will be saved in `output directory`
 
 ```
 python evaluate.py --dataset Dataset --restore-weight Checkpoint_Path --input Input_Directory --output Output_Directory
