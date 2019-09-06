@@ -1,18 +1,18 @@
 # Self Correction for Human Parsing
 
-An out-of-box human parsing representation extracter. And 3rd LIP challenge winner solution!
+An out-of-box human parsing representation extracter. Also the 3rd LIP challenge winner solution!
 
 ![lip-visualization](./img/lip-visualization.jpg)
 
-At this time, we provid the pretrained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extracter and faciliate your own tasks.
+At this time, we provide the trained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extracter and faciliate your own tasks.
 
-## ToDO List
+## TODO List
 
 - [x] Inference code on three popular single person human parsing datasets.
-- [ ] Inference code on multi-person and video human parsing datasets.
 - [ ] Training code
+- [ ] Inference code on multi-person and video human parsing datasets.
 
-Stay tuned!
+Coming Soon! Stay tuned!
 
 ## Requirements
 
@@ -22,7 +22,7 @@ Python >= 3.5, PyTorch >= 0.4
 
 ## Pretrained models
 
-The easist way to get started is to use our pretrained SCHP models on your own images to extract human parsing representation. Here we provided pretrained models on three popular datasets. Theses three datasets have different label system, you can choose the best one fit on your own task.
+The easist way to get started is to use our trained SCHP models on your own images to extract human parsing representations. Here we provided trained models on three popular datasets. Theses three datasets have different label system, you can choose the best one to fit on your own task.
 
 **LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1ZrTiadzAOM332d896fw7JZQ2lWALedDB/view?usp=sharing))
 
@@ -46,15 +46,15 @@ Choose one and have fun on your own task!
 
 ## Inference
 
-To extract the human parsing representation, simply put your own image in the `input directory`, download a pretrained model and run the following command. The output images with the same file name will be saved in `output directory`
+To extract the human parsing representation, simply put your own image in the `Input_Directory`, download a pretrained model and run the following command. The output images with the same file name will be saved in `Output_Directory`
 
 ```
 python evaluate.py --dataset Dataset --restore-weight Checkpoint_Path --input Input_Directory --output Output_Directory
 ```
 
-The `Dataset` has three options, including 'lip', 'atr' and 'pascal'. Note each pixel in the output images denotes the predicted label number. To better visulaization, we put a palette with the output images. We suggest you to read the image with `PIL`.
+The `Dataset` command has three options, including 'lip', 'atr' and 'pascal'. Note each pixel in the output images denotes the predicted label number. The output images have the same size as the input ones. To better visualization, we put a palette with the output images. We suggest you to read the image with `PIL`.
 
-If you need not only the final parsing image, but also a feature map representation. Add `--logits` command to save the output feature map. This feature map is the logits before softmax layer with dimension of HxWxC.
+If you need not only the final parsing image, but also a feature map representation. Add `--logits` command to save the output feature map. This feature map is the logits before softmax layer with the dimension of HxWxC.
 
 
 ## Visualization
