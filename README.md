@@ -1,16 +1,16 @@
 # Self Correction for Human Parsing
 
-An out-of-box human parsing representation extracter. Also the 3rd LIP challenge winner solution!
+An out-of-box human parsing representation extractor. Also the 3rd LIP challenge winner solution!
 
 ![lip-visualization](./img/lip-visualization.jpg)
 
-At this time, we provide the trained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extracter and faciliate your own tasks.
+At this time, we provide the trained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extractor and facilitate your own tasks, e.g. Fashion AI, Person Re-Identification, Virtual Reality, Virtual Try-on, Human Analysis and so on.
 
 ## TODO List
 
 - [x] Inference code on three popular single person human parsing datasets.
 - [ ] Training code
-- [ ] Inference code on multi-person and video human parsing datasets.
+- [ ] Extension on multi-person and video human parsing tasks.
 
 Coming Soon! Stay tuned!
 
@@ -20,9 +20,9 @@ Coming Soon! Stay tuned!
 Python >= 3.5, PyTorch >= 0.4
 ```
 
-## Pretrained models
+## Trained models
 
-The easist way to get started is to use our trained SCHP models on your own images to extract human parsing representations. Here we provided trained models on three popular datasets. Theses three datasets have different label system, you can choose the best one to fit on your own task.
+The easiest way to get started is to use our trained SCHP models on your own images to extract human parsing representations. Here we provided trained models on three popular datasets. Theses three datasets have different label system, you can choose the best one to fit on your own task.
 
 **LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1ZrTiadzAOM332d896fw7JZQ2lWALedDB/view?usp=sharing))
 
