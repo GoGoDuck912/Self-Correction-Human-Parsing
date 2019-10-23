@@ -6,6 +6,19 @@ An out-of-box human parsing representation extractor. Also the 3rd LIP challenge
 
 At this time, we provide the trained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extractor and facilitate your own tasks, e.g. Fashion AI, Person Re-Identification, Virtual Reality, Virtual Try-on, Human Analysis and so on.
 
+## Citation
+
+Please cite our work if you find this repo useful in your research.
+
+```latex
+@article{li2019selfcorrection,
+  title={Self-Correction for Human Parsing},
+  author={Peike Li and Yunqiu Xu and Yunchao Wei and Yi Yang},
+  journal={arXiv preprint arXiv:1910.09777},
+  year={2019}
+}
+```
+
 ## TODO List
 
 - [x] Inference code on three popular single person human parsing datasets.
