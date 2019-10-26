@@ -11,9 +11,9 @@ At this time, we provide the trained models on three popular human parsing datas
 Please cite our work if you find this repo useful in your research.
 
 ```latex
-@article{li2019selfcorrection,
+@article{li2019self,
   title={Self-Correction for Human Parsing},
-  author={Peike Li and Yunqiu Xu and Yunchao Wei and Yi Yang},
+  author={Li, Peike and Xu, Yunqiu and Wei, Yunchao and Yang, Yi},
   journal={arXiv preprint arXiv:1910.09777},
   year={2019}
 }
