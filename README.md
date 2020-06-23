@@ -1,10 +1,88 @@
 # Self Correction for Human Parsing
 
-An out-of-box human parsing representation extractor. Also the 3rd LIP challenge winner solution!
+![Python 3.6](https://img.shields.io/badge/python-3.6-green.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-![lip-visualization](./img/lip-visualization.jpg)
+An out-of-box human parsing representation extractor.
 
-At this time, we provide the trained models on three popular human parsing datasets that achieve the state-of-the-art performance. We hope our work could serve as a basic human parsing representation extractor and facilitate your own tasks, e.g. Fashion AI, Person Re-Identification, Virtual Reality, Virtual Try-on, Human Analysis and so on.
+Our solution ranks 1st for all human parsing tracks (including single, multiple and video) in the third LIP challenge!
+
+![lip-visualization](./demo/lip-visualization.jpg) 
+
+Features:
+- [x] Out-of-box human parsing extractor for other downstream applications.
+- [x] Pretrained model on three popular single person human parsing datasets.
+- [x] Training and inferecne code.
+- [x] Simple yet effective extension on multi-person and video human parsing tasks.
+
+## Requirements
+
+```
+Python >= 3.6, PyTorch >= 1.0
+```
+
+## Simple Out-of-Box Extractor
+
+The easiest way to get started is to use our trained SCHP models on your own images to extract human parsing representations. Here we provided state-of-the-art [trained models](https://drive.google.com/drive/folders/1uOaQCpNtosIjEL2phQKEdiYd0Td18jNo?usp=sharing) on three popular datasets. Theses three datasets have different label system, you can choose the best one to fit on your own task.
+
+**LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1k4dllHpu0bdx38J7H28rVVLpU-kOHmnH/view?usp=sharing))
+
+* mIoU on LIP validation: **59.36 %**.
+
+* LIP is the largest single person human parsing dataset with 50000+ images. This dataset focus more on the complicated real scenarios. LIP has 20 labels, including 'Background', 'Hat', 'Hair', 'Glove', 'Sunglasses', 'Upper-clothes', 'Dress', 'Coat', 'Socks', 'Pants', 'Jumpsuits', 'Scarf', 'Skirt', 'Face', 'Left-arm', 'Right-arm', 'Left-leg', 'Right-leg', 'Left-shoe', 'Right-shoe'.
+
+**ATR** ([exp-schp-201908301523-atr.pth](https://drive.google.com/file/d/1ruJg4lqR_jgQPj-9K0PP-L2vJERYOxLP/view?usp=sharing))
+
+* mIoU on ATR test: **82.29%**.
+
+* ATR is a large single person human parsing dataset with 17000+ images. This dataset focus more on fashion AI. ATR has 18 labels, including 'Background', 'Hat', 'Hair', 'Sunglasses', 'Upper-clothes', 'Skirt', 'Pants', 'Dress', 'Belt', 'Left-shoe', 'Right-shoe', 'Face', 'Left-leg', 'Right-leg', 'Left-arm', 'Right-arm', 'Bag', 'Scarf'.
+
+**Pascal-Person-Part** ([exp-schp-201908270938-pascal-person-part.pth](https://drive.google.com/file/d/1E5YwNKW2VOEayK9mWCS3Kpsxf-3z04ZE/view?usp=sharing))
+
+* mIoU on Pascal-Person-Part validation: **71.46** %.
+
+* Pascal Person Part is a tiny single person human parsing dataset with 3000+ images. This dataset focus more on body parts segmentation. Pascal Person Part has 7 labels, including 'Background', 'Head', 'Torso', 'Upper Arms', 'Lower Arms', 'Upper Legs', 'Lower Legs'.
+
+Choose one and have fun on your own task!
+
+To extract the human parsing representation, simply put your own image in the `INPUT_PATH` folder, then download a pretrained model and run the following command. The output images with the same file name will be saved in `OUTPUT_PATH`
+
+```
+python simple_extractor.py --dataset [DATASET] --model-restore [CHECKPOINT_PATH] --input-dir [INPUT_PATH] --output-dir [OUTPUT_PATH]
+```
+
+The `DATASET` command has three options, including 'lip', 'atr' and 'pascal'. Note each pixel in the output images denotes the predicted label number. The output images have the same size as the input ones. To better visualization, we put a palette with the output images. We suggest you to read the image with `PIL`.
+
+If you need not only the final parsing images, but also the feature map representations. Add `--logits` command to save the output feature maps. These feature maps are the logits before softmax layer.
+
+## Dataset Preparation
+
+Please download the [LIP](http://sysu-hcp.net/lip/) dataset following the below structure.
+
+```commandline
+data/LIP
+|--- train_imgaes # 30462 training single person images
+|--- val_images # 10000 validation single person images
+|--- train_segmentations # 30462 training annotations
+|--- val_segmentations # 10000 training annotations
+|--- train_id.txt # training image list
+|--- val_id.txt # validation image list
+```
+
+## Training
+
+```
+python trian.py 
+```
+
+## Evaluation
+```
+python evaluate.py --model-restore [CHECKPOINT_PATH]
+```
+
+## Extension on Multiple Human Parsing
+
+Please read [MultipleHumanParsing.md](./mhp_extension/README.md) for more details.
 
 ## Citation
 
@@ -19,73 +97,27 @@ Please cite our work if you find this repo useful in your research.
 }
 ```
 
-## TODO List
-
-- [x] Inference code on three popular single person human parsing datasets.
-- [ ] Training code
-- [ ] Extension on multi-person and video human parsing tasks.
-
-Coming Soon! Stay tuned!
-
-## Requirements
-
-```
-Python >= 3.5, PyTorch >= 0.4
-```
-
-## Trained models
-
-The easiest way to get started is to use our trained SCHP models on your own images to extract human parsing representations. Here we provided trained models on three popular datasets. Theses three datasets have different label system, you can choose the best one to fit on your own task.
-
-**LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1ZrTiadzAOM332d896fw7JZQ2lWALedDB/view?usp=sharing))
-
-* mIoU on LIP validation: **59.36 %**.
-
-* LIP is the largest single person human parsing dataset with 50000+ images. This dataset focus more on the complicated real scenarios. LIP has 20 labels, including 'Background', 'Hat', 'Hair', 'Glove', 'Sunglasses', 'Upper-clothes', 'Dress', 'Coat', 'Socks', 'Pants', 'Jumpsuits', 'Scarf', 'Skirt', 'Face', 'Left-arm', 'Right-arm', 'Left-leg', 'Right-leg', 'Left-shoe', 'Right-shoe'.
-
-**ATR** ([exp-schp-201908301523-atr.pth](https://drive.google.com/file/d/1klCtqx51orBkFKdkvYwM4qao_vEFbJ_z/view?usp=sharing))
-
-* mIoU on ATR test: **82.29%**.
-
-* ATR is a large single person human parsing dataset with 17000+ images. This dataset focus more on fashion AI. ATR has 18 labels, including 'Background', 'Hat', 'Hair', 'Sunglasses', 'Upper-clothes', 'Skirt', 'Pants', 'Dress', 'Belt', 'Left-shoe', 'Right-shoe', 'Face', 'Left-leg', 'Right-leg', 'Left-arm', 'Right-arm', 'Bag', 'Scarf'.
-
-**Pascal-Person-Part** ([exp-schp-201908270938-pascal-person-part.pth](https://drive.google.com/file/d/13ph1AloYNiC4DIGOyCLZdmA08tP9OeGu/view?usp=sharing))
-
-* mIoU on Pascal-Person-Part validation: **71.46** %.
-
-* Pascal Person Part is a tiny single person human parsing dataset with 3000+ images. This dataset focus more on body parts segmentation. Pascal Person Part has 7 labels, including 'Background', 'Head', 'Torso', 'Upper Arms', 'Lower Arms', 'Upper Legs', 'Lower Legs'.
-
-Choose one and have fun on your own task!
-
-## Inference
-
-To extract the human parsing representation, simply put your own image in the `Input_Directory`, download a pretrained model and run the following command. The output images with the same file name will be saved in `Output_Directory`
-
-```
-python evaluate.py --dataset Dataset --restore-weight Checkpoint_Path --input Input_Directory --output Output_Directory
-```
-
-The `Dataset` command has three options, including 'lip', 'atr' and 'pascal'. Note each pixel in the output images denotes the predicted label number. The output images have the same size as the input ones. To better visualization, we put a palette with the output images. We suggest you to read the image with `PIL`.
-
-If you need not only the final parsing image, but also a feature map representation. Add `--logits` command to save the output feature map. This feature map is the logits before softmax layer with the dimension of HxWxC.
-
-
 ## Visualization
 
 * Source Image.
-![demo](./input/demo.jpg)
-
+![demo](./demo/demo.jpg)
 * LIP Parsing Result.
-![demo-lip](./output/demo_lip.png)
-
+![demo-lip](./demo/demo_lip.png)
 * ATR Parsing Result.
-![demo-atr](./output/demo_atr.png)
-
+![demo-atr](./demo/demo_atr.png)
 * Pascal-Person-Part Parsing Result.
-![demo-pascal](./output/demo_pascal.png)
+![demo-pascal](./demo/demo_pascal.png)
+* Source Image.
+![demo](./mhp_extension/demo/demo.jpg)
+* Instance Human Mask.
+![demo-lip](./mhp_extension/demo/demo_instance_human_mask.png)
+* Global Human Parsing Result.
+![demo-lip](./mhp_extension/demo/demo_global_human_parsing.png)
+* Multiple Human Parsing Result.
+![demo-lip](./mhp_extension/demo/demo_multiple_human_parsing.png)
 
 
 ## Related
+Our code adopts the [InplaceSyncBN](https://github.com/mapillary/inplace_abn) to save gpu memory cost.
 
-There is also a [PaddlePaddle](https://github.com/PaddlePaddle/PaddleSeg/tree/master/contrib/ACE2P) Implementation.
-This implementation is the version that we submitted to the 3rd LIP Challenge.
+There is also a [PaddlePaddle](https://github.com/PaddlePaddle/PaddleSeg/tree/develop/contrib/ACE2P) Implementation of this project.
