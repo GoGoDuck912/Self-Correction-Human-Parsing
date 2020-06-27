@@ -260,7 +260,7 @@ def multi_process(a, args):
     msrcnn_bbox = a['person_bbox']
     bbox_score = a['person_bbox_score']
 
-    ######### loading outputs from 3 models #########
+    ######### loading outputs from gloabl and local models #########
     global_output = np.load(os.path.join(args.global_output_dir, os.path.splitext(img_name)[0] + '.npy'))
 
     msrcnn_output = patch2img_output(args.msrcnn_output_dir, img_name, img_height, img_width, msrcnn_bbox,
@@ -269,8 +269,10 @@ def multi_process(a, args):
     gt_output = patch2img_output(args.gt_output_dir, img_name, img_height, img_width, msrcnn_bbox, bbox_type='msrcnn',
                                  num_class=20)
 
-    ### 3 branch logits fusion #####
-    fused_output = global_output + msrcnn_output + gt_output
+    #### global and local branch logits fusion #####
+#     fused_output = global_output + msrcnn_output + gt_output
+    fused_output = global_output + gt_output
+
 
     mask_output_path = os.path.join(args.mask_output_dir, os.path.splitext(img_name)[0] + '_mask.npy')
     result_saving(fused_output, img_name, img_height, img_width, args.save_dir, mask_output_path, bbox_score, msrcnn_bbox)
@@ -291,8 +293,8 @@ def get_arguments():
     parser.add_argument("--test_json_path", type=str, default='./data/CIHP/cascade_152_finetune/test.json')
     parser.add_argument("--global_output_dir", type=str,
                         default='./data/CIHP/global/global_result-cihp-resnet101/global_output')
-    parser.add_argument("--msrcnn_output_dir", type=str,
-                        default='./data/CIHP/cascade_152__finetune/msrcnn_result-cihp-resnet101/msrcnn_output')
+#     parser.add_argument("--msrcnn_output_dir", type=str,
+#                         default='./data/CIHP/cascade_152__finetune/msrcnn_result-cihp-resnet101/msrcnn_output')
     parser.add_argument("--gt_output_dir", type=str,
                         default='./data/CIHP/cascade_152__finetune/gt_result-cihp-resnet101/gt_output')
     parser.add_argument("--mask_output_dir", type=str, default='./data/CIHP/cascade_152_finetune/mask')
