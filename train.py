@@ -202,7 +202,7 @@ def main():
                 print('iter = {} of {} completed, lr = {}, loss = {}'.format(i_iter, total_iters, lr,
                                                                              loss.data.cpu().numpy()))
         if (epoch + 1) % (args.eval_epochs) == 0:
-            schp.save_checkpoint({
+            schp.save_schp_checkpoint({
                 'epoch': epoch + 1,
                 'state_dict': model.state_dict(),
             }, False, args.log_dir, filename='checkpoint_{}.pth.tar'.format(epoch + 1))
