@@ -74,11 +74,13 @@ data/LIP
 ```
 python trian.py 
 ```
+By default, the trained model will be saved in `./log` directory. Please read the arguments for more details.
 
 ## Evaluation
 ```
 python evaluate.py --model-restore [CHECKPOINT_PATH]
 ```
+CHECKPOINT_PATH should be the path of trained model.
 
 ## Extension on Multiple Human Parsing
 
