@@ -112,11 +112,12 @@ class InPlaceABN(autograd.Function):
         # Output
         ctx.var = var
         ctx.save_for_backward(x, var, weight, bias)
-        return x
+        ctx.mark_non_differentiable(running_mean, running_var)
+        return x, running_mean, running_var
 
     @staticmethod
     @once_differentiable
-    def backward(ctx, dz):
+    def backward(ctx, dz, _drunning_mean, _drunning_var):
         z, var, weight, bias = ctx.saved_tensors
         dz = dz.contiguous()
 
@@ -200,11 +201,12 @@ class InPlaceABNSync(autograd.Function):
         # Output
         ctx.var = var
         ctx.save_for_backward(x, var, weight, bias)
-        return x
+        ctx.mark_non_differentiable(running_mean, running_var)
+        return x, running_mean, running_var
 
     @staticmethod
     @once_differentiable
-    def backward(ctx, dz):
+    def backward(ctx, dz, _drunning_mean, _drunning_var):
         z, var, weight, bias = ctx.saved_tensors
         dz = dz.contiguous()
 
