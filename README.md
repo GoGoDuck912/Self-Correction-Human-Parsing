@@ -3,6 +3,8 @@
 ![Python 3.6](https://img.shields.io/badge/python-3.6-green.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
+## This is a forked repository for CPU machines
+
 An out-of-box human parsing representation extractor.
 
 Our solution ranks 1st for all human parsing tracks (including single, multiple and video) in the third LIP challenge!
