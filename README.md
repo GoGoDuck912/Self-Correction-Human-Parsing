@@ -72,7 +72,7 @@ data/LIP
 ## Training
 
 ```
-python trian.py 
+python train.py 
 ```
 By default, the trained model will be saved in `./log` directory. Please read the arguments for more details.
 
