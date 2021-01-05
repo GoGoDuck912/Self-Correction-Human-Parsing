@@ -7,15 +7,20 @@ from torch.autograd.function import once_differentiable
 from torch.utils.cpp_extension import load
 
 _src_path = path.join(path.dirname(path.abspath(__file__)), "src")
+
+if torch.cuda.is_available():
+    source_files = [ "inplace_abn.cpp", "inplace_abn_cpu.cpp", 
+                     "inplace_abn_cuda.cu", "inplace_abn_cuda_half.cu"]
+    loaf_kwargs = { "extra_cuda_cflags": ["--expt-extended-lambda"] }
+else:
+    source_files = [ "inplace_abn.cpp", "inplace_abn_cpu.cpp" ]
+    load_kwargs = { "with_cuda": False } 
+
+
 _backend = load(name="inplace_abn",
                 extra_cflags=["-O3"],
-                sources=[path.join(_src_path, f) for f in [
-                    "inplace_abn.cpp",
-                    "inplace_abn_cpu.cpp",
-                    "inplace_abn_cuda.cu",
-                    "inplace_abn_cuda_half.cu"
-                ]],
-                extra_cuda_cflags=["--expt-extended-lambda"])
+                sources=[path.join(_src_path, f) for f in source_files],
+                **load_kwargs)
 
 # Activation names
 ACT_RELU = "relu"

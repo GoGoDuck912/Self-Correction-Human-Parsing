@@ -85,4 +85,16 @@ __device__ T reduce(Op op, int plane, int N, int S) {
   // Everyone picks it up, should be broadcast into the whole gradInput
   return shared[0];
 }
+#else 
+const auto mean_var_cuda = mean_var_cpu;
+const auto mean_var_cuda_h = mean_var_cpu;
+const auto forward_cuda = forward_cpu; 
+const auto forward_cuda_h = forward_cpu;
+const auto edz_eydz_cuda = edz_eydz_cpu;
+const auto edz_eydz_cuda_h = edz_eydz_cpu;
+const auto backward_cuda = backward_cpu;
+const auto backward_cuda_h = backward_cpu;
+const auto leaky_relu_backward_cuda = leaky_relu_backward_cpu;
+const auto leaky_relu_backward_cuda_h = leaky_relu_backward_cpu;
+const auto elu_backward_cuda = elu_backward_cpu; 
 #endif
