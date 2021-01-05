@@ -18,7 +18,9 @@ Features:
 ## Requirements
 
 ```
-Python >= 3.6, PyTorch >= 1.0
+conda env create -f environment.yaml
+conda activate schp
+pip install -r requirements.txt
 ```
 
 ## Simple Out-of-Box Extractor
