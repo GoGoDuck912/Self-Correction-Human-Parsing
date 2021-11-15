@@ -18,7 +18,7 @@ import torch.nn as nn
 from torch.nn import functional as F
 # Note here we adopt the InplaceABNSync implementation from https://github.com/mapillary/inplace_abn
 # By default, the InplaceABNSync module contains a BatchNorm Layer and a LeakyReLu layer
-from modules import InPlaceABNSync
+from ..modules import InPlaceABNSync
 
 BatchNorm2d = functools.partial(InPlaceABNSync, activation='none')
 
@@ -118,7 +118,7 @@ class PSPModule(nn.Module):
 
 class ASPPModule(nn.Module):
     """
-    Reference: 
+    Reference:
         Chen, Liang-Chieh, et al. *"Rethinking Atrous Convolution for Semantic Image Segmentation."*
     """
 
