@@ -5,36 +5,19 @@
 #include <vector>
 
 std::vector<at::Tensor> mean_var_cpu(at::Tensor x);
-std::vector<at::Tensor> mean_var_cuda(at::Tensor x);
-std::vector<at::Tensor> mean_var_cuda_h(at::Tensor x);
 
 at::Tensor forward_cpu(at::Tensor x, at::Tensor mean, at::Tensor var, at::Tensor weight, at::Tensor bias,
                        bool affine, float eps);
-at::Tensor forward_cuda(at::Tensor x, at::Tensor mean, at::Tensor var, at::Tensor weight, at::Tensor bias,
-                        bool affine, float eps);
-at::Tensor forward_cuda_h(at::Tensor x, at::Tensor mean, at::Tensor var, at::Tensor weight, at::Tensor bias,
-                          bool affine, float eps);
 
 std::vector<at::Tensor> edz_eydz_cpu(at::Tensor z, at::Tensor dz, at::Tensor weight, at::Tensor bias,
                                      bool affine, float eps);
-std::vector<at::Tensor> edz_eydz_cuda(at::Tensor z, at::Tensor dz, at::Tensor weight, at::Tensor bias,
-                                      bool affine, float eps);
-std::vector<at::Tensor> edz_eydz_cuda_h(at::Tensor z, at::Tensor dz, at::Tensor weight, at::Tensor bias,
-                                        bool affine, float eps);
 
 at::Tensor backward_cpu(at::Tensor z, at::Tensor dz, at::Tensor var, at::Tensor weight, at::Tensor bias,
                                      at::Tensor edz, at::Tensor eydz, bool affine, float eps);
-at::Tensor backward_cuda(at::Tensor z, at::Tensor dz, at::Tensor var, at::Tensor weight, at::Tensor bias,
-                                      at::Tensor edz, at::Tensor eydz, bool affine, float eps);
-at::Tensor backward_cuda_h(at::Tensor z, at::Tensor dz, at::Tensor var, at::Tensor weight, at::Tensor bias,
-                                        at::Tensor edz, at::Tensor eydz, bool affine, float eps);
 
 void leaky_relu_backward_cpu(at::Tensor z, at::Tensor dz, float slope);
-void leaky_relu_backward_cuda(at::Tensor z, at::Tensor dz, float slope);
-void leaky_relu_backward_cuda_h(at::Tensor z, at::Tensor dz, float slope);
 
 void elu_backward_cpu(at::Tensor z, at::Tensor dz);
-void elu_backward_cuda(at::Tensor z, at::Tensor dz);
 
 static void get_dims(at::Tensor x, int64_t& num, int64_t& chn, int64_t& sp) {
   num = x.size(0);
@@ -50,6 +33,30 @@ static void get_dims(at::Tensor x, int64_t& num, int64_t& chn, int64_t& sp) {
 #ifdef __CUDACC__
 
 #include "utils/cuda.cuh"
+
+std::vector<at::Tensor> mean_var_cuda(at::Tensor x);
+std::vector<at::Tensor> mean_var_cuda_h(at::Tensor x);
+
+at::Tensor forward_cuda(at::Tensor x, at::Tensor mean, at::Tensor var, at::Tensor weight, at::Tensor bias,
+                        bool affine, float eps);
+at::Tensor forward_cuda_h(at::Tensor x, at::Tensor mean, at::Tensor var, at::Tensor weight, at::Tensor bias,
+                          bool affine, float eps);
+
+std::vector<at::Tensor> edz_eydz_cuda(at::Tensor z, at::Tensor dz, at::Tensor weight, at::Tensor bias,
+                                      bool affine, float eps);
+std::vector<at::Tensor> edz_eydz_cuda_h(at::Tensor z, at::Tensor dz, at::Tensor weight, at::Tensor bias,
+                                        bool affine, float eps);
+
+at::Tensor backward_cuda(at::Tensor z, at::Tensor dz, at::Tensor var, at::Tensor weight, at::Tensor bias,
+                                      at::Tensor edz, at::Tensor eydz, bool affine, float eps);
+at::Tensor backward_cuda_h(at::Tensor z, at::Tensor dz, at::Tensor var, at::Tensor weight, at::Tensor bias,
+                                        at::Tensor edz, at::Tensor eydz, bool affine, float eps);
+
+void leaky_relu_backward_cuda(at::Tensor z, at::Tensor dz, float slope);
+
+void leaky_relu_backward_cuda_h(at::Tensor z, at::Tensor dz, float slope);
+
+void elu_backward_cuda(at::Tensor z, at::Tensor dz);
 
 template <typename T, typename Op>
 __device__ T reduce(Op op, int plane, int N, int S) {
@@ -85,4 +92,16 @@ __device__ T reduce(Op op, int plane, int N, int S) {
   // Everyone picks it up, should be broadcast into the whole gradInput
   return shared[0];
 }
+#else 
+const auto mean_var_cuda = mean_var_cpu;
+const auto mean_var_cuda_h = mean_var_cpu;
+const auto forward_cuda = forward_cpu; 
+const auto forward_cuda_h = forward_cpu;
+const auto edz_eydz_cuda = edz_eydz_cpu;
+const auto edz_eydz_cuda_h = edz_eydz_cpu;
+const auto backward_cuda = backward_cpu;
+const auto backward_cuda_h = backward_cpu;
+const auto leaky_relu_backward_cuda = leaky_relu_backward_cpu;
+const auto leaky_relu_backward_cuda_h = leaky_relu_backward_cpu;
+const auto elu_backward_cuda = elu_backward_cpu; 
 #endif
