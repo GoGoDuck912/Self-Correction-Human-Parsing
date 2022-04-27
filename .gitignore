@@ -1,0 +1,10 @@
+**/__pycache__
+*.DS_Store
+test.py
+.idea/
+data/
+log/
+pretrain_model/
+eval/
+image_test_GIRL/
+visualize1/
