@@ -91,9 +91,9 @@ def get_palette(num_cls):
 def main():
     args = get_arguments()
 
-    gpus = [int(i) for i in args.gpu.split(',')]
-    assert len(gpus) == 1
-    if not args.gpu == 'None':
+    if args.gpu != 'None':
+        gpus = [int(i) for i in args.gpu.split(',')]
+        assert len(gpus) == 1
         os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
 
     num_classes = dataset_settings[args.dataset]['num_classes']
@@ -103,14 +103,18 @@ def main():
 
     model = networks.init_model('resnet101', num_classes=num_classes, pretrained=None)
 
-    state_dict = torch.load(args.model_restore)['state_dict']
+    state_dict = torch.load(args.model_restore, map_location='cpu')['state_dict']
     from collections import OrderedDict
     new_state_dict = OrderedDict()
     for k, v in state_dict.items():
         name = k[7:]  # remove `module.`
         new_state_dict[name] = v
     model.load_state_dict(new_state_dict)
-    model.cuda()
+    
+    # GPU kontrolü - eğer GPU varsa kullan, yoksa CPU kullan
+    use_gpu = args.gpu != 'None' and torch.cuda.is_available()
+    if use_gpu:
+        model.cuda()
     model.eval()
 
     transform = transforms.Compose([
@@ -133,7 +137,7 @@ def main():
             w = meta['width'].numpy()[0]
             h = meta['height'].numpy()[0]
 
-            output = model(image.cuda())
+            output = model(image.cuda() if use_gpu else image)
             upsample = torch.nn.Upsample(size=input_size, mode='bilinear', align_corners=True)
             upsample_output = upsample(output[0][-1][0].unsqueeze(0))
             upsample_output = upsample_output.squeeze()

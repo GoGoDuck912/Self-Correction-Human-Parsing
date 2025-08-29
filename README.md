@@ -1,15 +1,84 @@
-# Self Correction for Human Parsing
+# Self Correction for Human Parsing - Docker Edition
 
 ![Python 3.6](https://img.shields.io/badge/python-3.6-green.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+![Docker](https://img.shields.io/badge/docker-enabled-blue.svg)
+![Windows](https://img.shields.io/badge/windows-supported-green.svg)
+
+🐳 **Dockerized version with Windows support and CPU/GPU compatibility**
+
+## 🎯 Original Project Credits
+
+- **Original Authors:** [GoGoDuck912](https://github.com/GoGoDuck912/Self-Correction-Human-Parsing)
+- **Paper:** Self-Correction for Human Parsing
+- **License:** MIT License
+
+## 🆕 Docker Improvements
+
+- ✅ **Windows Compatibility** (C++ build tools included)
+- ✅ **CPU/GPU Auto-detection**
+- ✅ **One-command deployment** (`docker-compose up`)
+- ✅ **All 3 models supported** (LIP, ATR, Pascal)
+- ✅ **Cross-platform support** (Windows, Linux, macOS)
+
+## 🚀 Quick Start with Docker
+
+### Prerequisites
+
+- Docker Desktop installed
+- At least 4GB RAM available
+
+### Setup & Run
+
+```bash
+# 1. Clone this repository
+https://github.com/YahyaCengiz/Self-Correction-Human-Parsing.git
+cd Self-Correction-Human-Parsing
+
+# 2. Download pre-trained models (see models/README.md)
+
+# 3. Add your images to inputs/ folder
+
+# 4. Run with default LIP model
+docker-compose up
+
+# 5. Check results in outputs/ folder
+```
+
+### Model Selection
+
+Edit `docker-compose.yml` to change models:
+
+```yaml
+# For ATR model (fashion analysis)
+--dataset: "atr"
+--model-restore: "./models/exp-schp-201908301523-atr.pth"
+
+# For Pascal model (fast processing)
+--dataset: "pascal"
+--model-restore: "./models/exp-schp-201908270938-pascal-person-part.pth"
+```
+
+## 📊 Model Comparison
+
+| Model      | Classes | Speed          | Use Case                    |
+| ---------- | ------- | -------------- | --------------------------- |
+| **Pascal** | 7       | 3.01s/image ⚡ | Basic body parts, real-time |
+| **ATR**    | 18      | 6.60s/image    | Fashion, clothing analysis  |
+| **LIP**    | 20      | 7.22s/image    | Detailed research, academic |
+
+---
+
+## 📖 Original Documentation
 
 An out-of-box human parsing representation extractor.
 
 Our solution ranks 1st for all human parsing tracks (including single, multiple and video) in the third LIP challenge!
 
-![lip-visualization](./demo/lip-visualization.jpg) 
+![lip-visualization](./demo/lip-visualization.jpg)
 
 Features:
+
 - [x] Out-of-box human parsing extractor for other downstream applications.
 - [x] Pretrained model on three popular single person human parsing datasets.
 - [x] Training and inferecne code.
@@ -29,21 +98,21 @@ The easiest way to get started is to use our trained SCHP models on your own ima
 
 **LIP** ([exp-schp-201908261155-lip.pth](https://drive.google.com/file/d/1k4dllHpu0bdx38J7H28rVVLpU-kOHmnH/view?usp=sharing))
 
-* mIoU on LIP validation: **59.36 %**.
+- mIoU on LIP validation: **59.36 %**.
 
-* LIP is the largest single person human parsing dataset with 50000+ images. This dataset focus more on the complicated real scenarios. LIP has 20 labels, including 'Background', 'Hat', 'Hair', 'Glove', 'Sunglasses', 'Upper-clothes', 'Dress', 'Coat', 'Socks', 'Pants', 'Jumpsuits', 'Scarf', 'Skirt', 'Face', 'Left-arm', 'Right-arm', 'Left-leg', 'Right-leg', 'Left-shoe', 'Right-shoe'.
+- LIP is the largest single person human parsing dataset with 50000+ images. This dataset focus more on the complicated real scenarios. LIP has 20 labels, including 'Background', 'Hat', 'Hair', 'Glove', 'Sunglasses', 'Upper-clothes', 'Dress', 'Coat', 'Socks', 'Pants', 'Jumpsuits', 'Scarf', 'Skirt', 'Face', 'Left-arm', 'Right-arm', 'Left-leg', 'Right-leg', 'Left-shoe', 'Right-shoe'.
 
 **ATR** ([exp-schp-201908301523-atr.pth](https://drive.google.com/file/d/1ruJg4lqR_jgQPj-9K0PP-L2vJERYOxLP/view?usp=sharing))
 
-* mIoU on ATR test: **82.29%**.
+- mIoU on ATR test: **82.29%**.
 
-* ATR is a large single person human parsing dataset with 17000+ images. This dataset focus more on fashion AI. ATR has 18 labels, including 'Background', 'Hat', 'Hair', 'Sunglasses', 'Upper-clothes', 'Skirt', 'Pants', 'Dress', 'Belt', 'Left-shoe', 'Right-shoe', 'Face', 'Left-leg', 'Right-leg', 'Left-arm', 'Right-arm', 'Bag', 'Scarf'.
+- ATR is a large single person human parsing dataset with 17000+ images. This dataset focus more on fashion AI. ATR has 18 labels, including 'Background', 'Hat', 'Hair', 'Sunglasses', 'Upper-clothes', 'Skirt', 'Pants', 'Dress', 'Belt', 'Left-shoe', 'Right-shoe', 'Face', 'Left-leg', 'Right-leg', 'Left-arm', 'Right-arm', 'Bag', 'Scarf'.
 
 **Pascal-Person-Part** ([exp-schp-201908270938-pascal-person-part.pth](https://drive.google.com/file/d/1E5YwNKW2VOEayK9mWCS3Kpsxf-3z04ZE/view?usp=sharing))
 
-* mIoU on Pascal-Person-Part validation: **71.46** %.
+- mIoU on Pascal-Person-Part validation: **71.46** %.
 
-* Pascal Person Part is a tiny single person human parsing dataset with 3000+ images. This dataset focus more on body parts segmentation. Pascal Person Part has 7 labels, including 'Background', 'Head', 'Torso', 'Upper Arms', 'Lower Arms', 'Upper Legs', 'Lower Legs'.
+- Pascal Person Part is a tiny single person human parsing dataset with 3000+ images. This dataset focus more on body parts segmentation. Pascal Person Part has 7 labels, including 'Background', 'Head', 'Torso', 'Upper Arms', 'Lower Arms', 'Upper Legs', 'Lower Legs'.
 
 Choose one and have fun on your own task!
 
@@ -76,14 +145,17 @@ data/LIP
 ## Training
 
 ```
-python train.py 
+python train.py
 ```
+
 By default, the trained model will be saved in `./log` directory. Please read the arguments for more details.
 
 ## Evaluation
+
 ```
 python evaluate.py --model-restore [CHECKPOINT_PATH]
 ```
+
 CHECKPOINT_PATH should be the path of trained model.
 
 ## Extension on Multiple Human Parsing
@@ -96,34 +168,34 @@ Please cite our work if you find this repo useful in your research.
 
 ```latex
 @article{li2020self,
-  title={Self-Correction for Human Parsing}, 
+  title={Self-Correction for Human Parsing},
   author={Li, Peike and Xu, Yunqiu and Wei, Yunchao and Yang, Yi},
-  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence}, 
+  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
   year={2020},
   doi={10.1109/TPAMI.2020.3048039}}
 ```
 
 ## Visualization
 
-* Source Image.
-![demo](./demo/demo.jpg)
-* LIP Parsing Result.
-![demo-lip](./demo/demo_lip.png)
-* ATR Parsing Result.
-![demo-atr](./demo/demo_atr.png)
-* Pascal-Person-Part Parsing Result.
-![demo-pascal](./demo/demo_pascal.png)
-* Source Image.
-![demo](./mhp_extension/demo/demo.jpg)
-* Instance Human Mask.
-![demo-lip](./mhp_extension/demo/demo_instance_human_mask.png)
-* Global Human Parsing Result.
-![demo-lip](./mhp_extension/demo/demo_global_human_parsing.png)
-* Multiple Human Parsing Result.
-![demo-lip](./mhp_extension/demo/demo_multiple_human_parsing.png)
-
+- Source Image.
+  ![demo](./demo/demo.jpg)
+- LIP Parsing Result.
+  ![demo-lip](./demo/demo_lip.png)
+- ATR Parsing Result.
+  ![demo-atr](./demo/demo_atr.png)
+- Pascal-Person-Part Parsing Result.
+  ![demo-pascal](./demo/demo_pascal.png)
+- Source Image.
+  ![demo](./mhp_extension/demo/demo.jpg)
+- Instance Human Mask.
+  ![demo-lip](./mhp_extension/demo/demo_instance_human_mask.png)
+- Global Human Parsing Result.
+  ![demo-lip](./mhp_extension/demo/demo_global_human_parsing.png)
+- Multiple Human Parsing Result.
+  ![demo-lip](./mhp_extension/demo/demo_multiple_human_parsing.png)
 
 ## Related
+
 Our code adopts the [InplaceSyncBN](https://github.com/mapillary/inplace_abn) to save gpu memory cost.
 
 There is also a [PaddlePaddle](https://github.com/PaddlePaddle/PaddleSeg/tree/develop/contrib/ACE2P) Implementation of this project.

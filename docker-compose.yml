@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  human-parsing:
+    build: .
+    volumes:
+      - ./inputs:/app/inputs
+      - ./outputs:/app/outputs
+      - ./models:/app/models
+    environment:
+      - FORCE_CPU=1
+    command:
+      [
+        "python",
+        "simple_extractor.py",
+        "--dataset",
+        "pascal",
+        "--model-restore",
+        "./models/exp-schp-201908270938-pascal-person-part.pth",
+        "--input-dir",
+        "./inputs",
+        "--output-dir",
+        "./outputs",
+        "--gpu",
+        "None",
+      ]
